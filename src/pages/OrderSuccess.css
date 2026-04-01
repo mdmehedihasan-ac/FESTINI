@@ -125,7 +125,40 @@
 }
 
 @media (max-width: 500px) {
+  .success-page {
+    padding: 2rem 0.75rem;
+  }
   .success-card {
-    padding: 2rem 1.5rem;
+    padding: 1.75rem 1.25rem;
+    gap: 1rem;
+  }
+  .success-card h1 {
+    font-size: 1.5rem;
+  }
+  .success-sub {
+    font-size: 0.9rem;
+  }
+  .success-icon-wrap {
+    padding: 1rem;
+  }
+  .order-number-badge {
+    padding: 0.75rem 1.25rem;
+  }
+  .order-number-badge strong {
+    font-size: 1rem;
+  }
+  .step-text strong {
+    font-size: 0.88rem;
+  }
+  .step-text span {
+    font-size: 0.8rem;
+  }
+  .success-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .success-actions .btn {
+    width: 100%;
+    justify-content: center;
   }
 }

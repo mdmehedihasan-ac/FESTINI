@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Globe, MessageCircle, Mail, Phone, MapPin } from 'lucide-react';
+import { Globe, MessageCircle, Mail, Phone, MapPin, Camera, Heart } from 'lucide-react';
 import './Footer.css';
 
 const Footer = () => {
@@ -15,8 +15,15 @@ const Footer = () => {
             Personalizziamo le tue emozioni. Idee regalo uniche, stampe di altissima qualità e cura sartoriale per ogni tuo evento.
           </p>
           <div className="social-links mt-4">
-            <a href="#" aria-label="Social 1"><Globe size={20} /></a>
-            <a href="#" aria-label="Social 2"><MessageCircle size={20} /></a>
+            <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <Camera size={20} />
+            </a>
+            <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <Globe size={20} />
+            </a>
+            <a href="https://wa.me/390212345678" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <MessageCircle size={20} />
+            </a>
           </div>
         </div>
 
@@ -38,6 +45,7 @@ const Footer = () => {
             <li><Link to="/shop?category=apparel">Abbigliamento</Link></li>
             <li><Link to="/shop?category=party">Feste ed Eventi</Link></li>
             <li><Link to="/shop?category=promotional">Materiale Promozionale</Link></li>
+            <li><Link to="/shop?category=wedding">Wedding</Link></li>
           </ul>
         </div>
 
@@ -63,14 +71,16 @@ const Footer = () => {
               <span className="pay-badge">Stripe</span>
               <span className="pay-badge">PayPal</span>
               <span className="pay-badge">Visa</span>
+              <span className="pay-badge">PostePay</span>
             </div>
           </div>
         </div>
       </div>
       
       <div className="footer-bottom">
-        <div className="container">
+        <div className="container footer-bottom-inner">
           <p>&copy; {new Date().getFullYear()} Smart Print Ciotta. Tutti i diritti riservati.</p>
+          <p className="footer-made-with">Fatto con <Heart size={14} fill="white" /> in Italia</p>
         </div>
       </div>
     </footer>

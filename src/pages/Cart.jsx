@@ -1,12 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Trash2, Plus, Minus, ShoppingBag, ArrowRight } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Shield, Truck, Info } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './Cart.css';
+
+const SHIPPING_BASE = 4.99;
+const SHIPPING_EXTRA = 5.00; // extra for posters/torte scenografiche
+const INSURANCE_COST = 2.99;
+
+const EXTRA_SHIPPING_CATEGORIES = ['poster', 'torte scenografiche', 'canvas', 'tela'];
 
 const Cart = () => {
   const { items, totalCount, totalPrice, updateQty, removeItem, clearCart } = useCart();
   const navigate = useNavigate();
+  const [shippingInsurance, setShippingInsurance] = useState(false);
 
   if (items.length === 0) {
     return (
@@ -22,6 +29,17 @@ const Cart = () => {
       </div>
     );
   }
+
+  // Check if any item requires extra shipping
+  const hasExtraShipping = items.some(item => {
+    const sub = (item.subcategory || '').toLowerCase();
+    const name = (item.name || '').toLowerCase();
+    return EXTRA_SHIPPING_CATEGORIES.some(cat => sub.includes(cat) || name.includes(cat));
+  });
+
+  const shipping = SHIPPING_BASE + (hasExtraShipping ? SHIPPING_EXTRA : 0);
+  const insurance = shippingInsurance ? INSURANCE_COST : 0;
+  const total = totalPrice + shipping + insurance;
 
   return (
     <div className="cart-page animate-fade-in">
@@ -86,22 +104,62 @@ const Cart = () => {
             <span>€{totalPrice.toFixed(2)}</span>
           </div>
           <div className="summary-row">
-            <span>Spedizione stimata</span>
-            <span>€4,99</span>
-          </div>
-          <div className="summary-row summary-total">
-            <span>Totale</span>
-            <span>€{(totalPrice + 4.99).toFixed(2)}</span>
+            <span>
+              Spedizione
+              {hasExtraShipping && (
+                <span className="extra-shipping-note">
+                  <Info size={14} /> Include supplemento
+                </span>
+              )}
+            </span>
+            <span>€{shipping.toFixed(2)}</span>
           </div>
 
-          <p className="summary-note">La spedizione definitiva viene calcolata al checkout.</p>
+          {hasExtraShipping && (
+            <div className="shipping-extra-info">
+              <Truck size={16} />
+              <span>Supplemento spedizione €{SHIPPING_EXTRA.toFixed(2)} per poster/torte scenografiche (dimensioni speciali).</span>
+            </div>
+          )}
+
+          {/* Shipping Insurance */}
+          <label className="insurance-toggle">
+            <input
+              type="checkbox"
+              checked={shippingInsurance}
+              onChange={e => setShippingInsurance(e.target.checked)}
+            />
+            <div className="insurance-info">
+              <Shield size={16} color="var(--primary)" />
+              <div>
+                <strong>Assicurazione spedizione</strong>
+                <span>Protezione completa per il tuo ordine</span>
+              </div>
+            </div>
+            <span className="insurance-price">+€{INSURANCE_COST.toFixed(2)}</span>
+          </label>
+
+          <div className="summary-row summary-total">
+            <span>Totale</span>
+            <span>€{total.toFixed(2)}</span>
+          </div>
 
           <button
             className="btn btn-primary checkout-btn"
-            onClick={() => navigate('/checkout')}
+            onClick={() => navigate('/checkout', { state: { shippingInsurance } })}
           >
             Procedi al Checkout <ArrowRight size={18} />
           </button>
+
+          <div className="cart-payment-methods">
+            <p>Accettiamo</p>
+            <div className="payment-icons-row">
+              <span className="pay-badge">Visa</span>
+              <span className="pay-badge">Mastercard</span>
+              <span className="pay-badge">PayPal</span>
+              <span className="pay-badge">PostePay</span>
+            </div>
+          </div>
 
           <Link to="/shop" className="btn btn-outline continue-btn">
             ← Continua lo Shopping

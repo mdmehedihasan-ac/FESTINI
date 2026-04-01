@@ -170,3 +170,35 @@ button {
 .product-card:hover .product-image-container .product-img {
   transform: scale(1.05);
 }
+
+/* ── Mobile Global Overrides ───────────────────────────────────────────────── */
+@media (max-width: 576px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.9rem;
+  }
+
+  h1, h2 {
+    line-height: 1.2;
+  }
+
+  /* Prevent horizontal overflow */
+  html, body {
+    overflow-x: hidden;
+  }
+
+  /* Improve touch targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  /* Better tap highlight */
+  * {
+    -webkit-tap-highlight-color: rgba(206, 35, 141, 0.1);
+  }
+}

@@ -1,3 +1,7 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Cart Page
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .cart-page {
   min-height: 60vh;
 }
@@ -28,18 +32,12 @@
   gap: 1rem;
 }
 
-.cart-empty h2 {
-  font-size: 1.8rem;
-}
-
-.cart-empty p {
-  color: var(--text-body);
-  max-width: 400px;
-}
+.cart-empty h2 { font-size: 1.8rem; }
+.cart-empty p { color: var(--text-body); max-width: 400px; }
 
 .cart-container {
   display: grid;
-  grid-template-columns: 1fr 340px;
+  grid-template-columns: 1fr 360px;
   gap: 2.5rem;
   padding-top: 2rem;
   padding-bottom: 4rem;
@@ -211,6 +209,89 @@
   color: var(--text-body);
 }
 
+.extra-shipping-note {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.75rem;
+  color: var(--accent);
+  margin-left: 0.5rem;
+}
+
+.shipping-extra-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background: #fff3e0;
+  border-radius: var(--radius-sm);
+  padding: 0.65rem 0.75rem;
+  margin-bottom: 0.75rem;
+  font-size: 0.78rem;
+  color: #e65100;
+  line-height: 1.4;
+}
+
+.shipping-extra-info svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Insurance toggle */
+.insurance-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  margin-bottom: 1rem;
+  cursor: pointer;
+  transition: var(--transition);
+  border: 1px solid transparent;
+}
+
+.insurance-toggle:hover {
+  border-color: rgba(181, 10, 116, 0.15);
+}
+
+.insurance-toggle input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  accent-color: var(--primary);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.insurance-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.insurance-info svg {
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.insurance-info strong {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--text-dark);
+}
+
+.insurance-info span {
+  font-size: 0.75rem;
+  color: var(--text-body);
+}
+
+.insurance-price {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--primary);
+  white-space: nowrap;
+}
+
 .summary-total {
   font-weight: 800;
   font-size: 1.1rem;
@@ -220,19 +301,42 @@
   margin-top: 0.25rem;
 }
 
-.summary-note {
-  font-size: 0.78rem;
-  color: var(--text-body);
-  opacity: 0.6;
-  margin: 0.75rem 0 1.5rem;
-}
-
 .checkout-btn {
   width: 100%;
   justify-content: center;
   margin-bottom: 0.75rem;
   font-size: 1rem;
   padding: 0.85rem;
+  margin-top: 1rem;
+}
+
+.cart-payment-methods {
+  text-align: center;
+  margin: 0.75rem 0;
+}
+
+.cart-payment-methods p {
+  font-size: 0.78rem;
+  color: var(--text-body);
+  opacity: 0.6;
+  margin-bottom: 0.5rem;
+}
+
+.payment-icons-row {
+  display: flex;
+  gap: 0.4rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.pay-badge {
+  background: var(--bg-secondary);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  border: 1px solid rgba(0,0,0,0.05);
 }
 
 .continue-btn {
@@ -245,20 +349,58 @@
 @media (max-width: 768px) {
   .cart-container {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+    padding-top: 1rem;
+    padding-bottom: 2rem;
   }
-
   .cart-summary {
     position: static;
   }
-
+  .cart-header {
+    padding: 1.25rem 0;
+  }
+  .cart-header h1 {
+    font-size: 1.4rem;
+  }
   .cart-item {
     flex-wrap: wrap;
+    padding: 1rem;
+    gap: 1rem;
   }
-
+  .cart-item-image {
+    width: 70px;
+    height: 70px;
+  }
+  .cart-item-name {
+    font-size: 0.92rem;
+  }
   .cart-item-actions {
     flex-direction: row;
     align-items: center;
     width: 100%;
     justify-content: space-between;
+  }
+  .cart-empty {
+    padding: 4rem 1rem;
+  }
+  .cart-empty h2 {
+    font-size: 1.4rem;
+  }
+  .insurance-toggle {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+  .insurance-info strong {
+    font-size: 0.8rem;
+  }
+  .insurance-info span {
+    font-size: 0.7rem;
+  }
+  .summary-row {
+    font-size: 0.88rem;
+  }
+  .checkout-btn {
+    font-size: 0.95rem;
+    padding: 0.8rem;
   }
 }

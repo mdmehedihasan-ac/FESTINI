@@ -143,6 +143,43 @@
   .desktop-only { display: none; }
   .mobile-toggle { display: block; }
   .mobile-menu { display: flex; }
+
+  .navbar {
+    padding: 0.65rem 0;
+  }
+
+  .logo-text {
+    font-size: 1.2rem;
+  }
+
+  .logo-subtext {
+    font-size: 0.7rem;
+    letter-spacing: 1.5px;
+  }
+
+  .nav-actions {
+    gap: 0.4rem;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .nav-search-input {
+    width: 120px;
+    font-size: 0.82rem;
+    padding: 0.3rem 0.7rem;
+  }
+
+  .mobile-menu {
+    padding: 1rem 1.25rem;
+  }
+
+  .mobile-link {
+    padding: 0.85rem 0;
+    font-size: 1rem;
+  }
 }
 
 /* Search form in navbar */

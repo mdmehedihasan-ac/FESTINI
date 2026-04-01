@@ -1,3 +1,7 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Product Detail Page
+   ═══════════════════════════════════════════════════════════════════════════ */
+
 .product-detail-page {
   padding: 3rem 0 6rem;
 }
@@ -105,6 +109,7 @@
   line-height: 1.8;
 }
 
+/* ── Personalization Section ───────────────────────────────────────────────── */
 .personalization-section {
   background: var(--bg-secondary);
   padding: 2rem;
@@ -115,7 +120,14 @@
 
 .personalization-section h3 {
   font-size: 1.2rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.personalization-hint {
+  font-size: 0.85rem;
+  color: var(--text-body);
+  opacity: 0.7;
+  margin-bottom: 1.25rem;
 }
 
 .form-group {
@@ -138,6 +150,7 @@
   font-family: inherit;
   font-size: 1rem;
   transition: var(--transition);
+  background: white;
 }
 
 .text-input:focus, .select-input:focus {
@@ -146,6 +159,37 @@
   box-shadow: 0 0 0 3px rgba(181, 10, 116, 0.1);
 }
 
+.text-input::placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+/* ── WhatsApp Note ─────────────────────────────────────────────────────────── */
+.whatsapp-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  padding: 1rem;
+  background: #e8f5e9;
+  border-radius: var(--radius-sm);
+  border-left: 3px solid #25d366;
+}
+
+.whatsapp-note svg {
+  color: #25d366;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.whatsapp-note p {
+  font-size: 0.85rem;
+  color: #2e7d32;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ── Cart Actions ──────────────────────────────────────────────────────────── */
 .cart-actions {
   display: flex;
   gap: 1rem;
@@ -161,7 +205,7 @@
 
 .qty-selector button {
   width: 45px;
-  height: 45px;
+  height: 50px;
   font-size: 1.2rem;
   color: var(--text-dark);
   display: flex;
@@ -184,6 +228,10 @@
 
 .add-to-cart-btn {
   flex: 1;
+  padding: 1rem 1.5rem !important;
+  font-size: 1.1rem !important;
+  font-weight: 700;
+  min-height: 54px;
 }
 
 .wishlist-btn {
@@ -193,6 +241,7 @@
   padding: 0;
 }
 
+/* ── Trust Badges ──────────────────────────────────────────────────────────── */
 .trust-badges {
   margin-top: 3rem;
   padding-top: 2rem;
@@ -220,13 +269,202 @@
   color: var(--text-body);
 }
 
+/* ── Related Products ──────────────────────────────────────────────────────── */
+.related-products {
+  margin-top: 5rem;
+  padding-top: 3rem;
+  border-top: 1px solid #f0f0f0;
+}
+
+.related-products .section-title {
+  font-size: 2rem;
+}
+
+.related-products .section-subtitle {
+  font-size: 1rem;
+}
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.related-card {
+  background: white;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  text-decoration: none;
+  transition: var(--transition);
+  border: 1px solid rgba(0,0,0,0.03);
+}
+
+.related-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.related-img-wrap {
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.related-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.related-card:hover .related-img-wrap img {
+  transform: scale(1.05);
+}
+
+.related-info {
+  padding: 1rem;
+}
+
+.related-info h4 {
+  font-size: 1rem;
+  color: var(--text-dark);
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
+}
+
+.related-price {
+  font-weight: 800;
+  color: var(--primary);
+  font-size: 1rem;
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
 @media (max-width: 992px) {
   .product-detail-container {
     grid-template-columns: 1fr;
+    gap: 2rem;
   }
-  
   .trust-badges {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 576px) {
+  .product-detail-page {
+    padding: 1.5rem 0 3rem;
+  }
+
+  .breadcrumb {
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+  }
+
+  .p-title {
+    font-size: 1.6rem;
+    margin: 0.35rem 0 0.75rem;
+  }
+
+  .p-price {
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+  }
+
+  .p-desc {
+    font-size: 0.95rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.7;
+  }
+
+  .personalization-section {
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .personalization-section h3 {
+    font-size: 1.05rem;
+  }
+
+  .text-input, .select-input, .file-input {
+    padding: 0.7rem 0.85rem;
+    font-size: 0.92rem;
+  }
+
+  .cart-actions {
+    flex-direction: column;
+  }
+
+  .qty-selector {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .qty-selector button {
+    width: 50px;
+    height: 46px;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+    min-height: 50px;
+    font-size: 1rem !important;
+    padding: 0.85rem 1rem !important;
+  }
+
+  .wishlist-btn {
+    display: none;
+  }
+
+  .trust-badges {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    grid-template-columns: 1fr;
+  }
+
+  .thumbnails {
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+  }
+
+  .thumb-wrap {
+    width: 60px;
+    height: 60px;
+    flex-shrink: 0;
+  }
+
+  .related-products {
+    margin-top: 3rem;
+    padding-top: 2rem;
+  }
+
+  .related-products .section-title {
+    font-size: 1.4rem;
+  }
+
+  .related-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+  }
+
+  .related-info { padding: 0.75rem; }
+  .related-info h4 { font-size: 0.88rem; }
+  .related-price { font-size: 0.9rem; }
+
+  .whatsapp-note {
+    padding: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .whatsapp-note p {
+    font-size: 0.8rem;
+  }
+
+  .badge-offer-large {
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.35rem 0.75rem;
+    font-size: 0.8rem;
   }
 }
 
@@ -234,7 +472,6 @@
   .cart-actions {
     flex-wrap: wrap;
   }
-  
   .add-to-cart-btn {
     width: 100%;
     flex: none;
