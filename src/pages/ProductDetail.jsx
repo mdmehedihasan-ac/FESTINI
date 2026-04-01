@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ShoppingCart, Heart, ShieldCheck, Truck, RotateCcw, Loader, MessageCircle, ArrowRight, Star } from 'lucide-react';
+import { ShoppingCart, Heart, ShieldCheck, Truck, RotateCcw, Loader, MessageCircle, ArrowRight, Star, Upload, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './ProductDetail.css';
 
@@ -18,6 +18,53 @@ const EXAMPLE_VALUES = {
   'Font': 'Corsivo elegante',
 };
 
+/* ── Styled file input ─────────────────────────────────────────────────────── */
+const FileInput = ({ label, onChange }) => {
+  const ref = useRef(null);
+  const [fileName, setFileName] = useState('');
+
+  const handleChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setFileName(file.name);
+      onChange(file.name);
+    }
+  };
+
+  const handleClear = (e) => {
+    e.stopPropagation();
+    setFileName('');
+    onChange('');
+    if (ref.current) ref.current.value = '';
+  };
+
+  return (
+    <div className="file-input-wrap" onClick={() => ref.current?.click()}>
+      <input
+        ref={ref}
+        type="file"
+        accept="image/*"
+        className="file-input-hidden"
+        onChange={handleChange}
+      />
+      <div className="file-input-btn">
+        <Upload size={18} />
+        <span>{fileName ? 'Cambia foto' : 'Carica foto'}</span>
+      </div>
+      {fileName ? (
+        <div className="file-input-preview">
+          <span className="file-input-name">{fileName}</span>
+          <button className="file-input-clear" onClick={handleClear} aria-label="Rimuovi">
+            <X size={14} />
+          </button>
+        </div>
+      ) : (
+        <span className="file-input-hint">JPG, PNG, WEBP — max 10 MB</span>
+      )}
+    </div>
+  );
+};
+
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
@@ -28,6 +75,7 @@ const ProductDetail = () => {
   const [qty, setQty] = useState(1);
   const [personalization, setPersonalization] = useState({});
   const [added, setAdded] = useState(false);
+  const [activeThumb, setActiveThumb] = useState(0);
   const { addItem } = useCart();
 
   useEffect(() => {
@@ -102,13 +150,6 @@ const ProductDetail = () => {
               {product.isSpecialOffer && <span className="badge-offer-large">Novità</span>}
               <img src={product.image} alt={product.name} className="main-image" />
             </div>
-            <div className="thumbnails">
-              {[product.image, product.image, product.image].map((img, i) => (
-                <div key={i} className={`thumb-wrap ${i === 0 ? 'active' : ''}`}>
-                  <img src={img} alt="thumbnail" />
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Product Info & Actions */}
@@ -122,13 +163,16 @@ const ProductDetail = () => {
             {/* Personalization Options */}
             {product.personalizeOptions && product.personalizeOptions.length > 0 && (
               <div className="personalization-section">
-                <h3>✏️ Personalizza il tuo prodotto</h3>
+                <h3>Personalizza il tuo prodotto</h3>
                 <p className="personalization-hint">Compila i campi sottostanti. Puoi anche lasciarli vuoti e specificarli dopo.</p>
                 {product.personalizeOptions.map((opt, i) => (
                   <div key={i} className="form-group">
                     <label>{opt}</label>
                     {opt.toLowerCase().includes('foto') || opt.toLowerCase().includes('grafica') ? (
-                      <input type="file" className="file-input" onChange={(e) => handlePersonalizeChange(opt, e.target.files[0]?.name)} />
+                      <FileInput
+                        label={opt}
+                        onChange={(name) => handlePersonalizeChange(opt, name)}
+                      />
                     ) : opt.toLowerCase().includes('colore') ? (
                       <select className="select-input" onChange={(e) => handlePersonalizeChange(opt, e.target.value)}>
                         <option value="">Seleziona...</option>
@@ -165,7 +209,7 @@ const ProductDetail = () => {
             <div className="cart-actions mt-6">
               <div className="qty-selector">
                 <button onClick={() => setQty(Math.max(1, qty - 1))}>-</button>
-                <input type="number" value={qty} readOnly />
+                <span className="qty-value">{qty}</span>
                 <button onClick={() => setQty(qty + 1)}>+</button>
               </div>
               <button

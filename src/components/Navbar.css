@@ -67,6 +67,211 @@
   width: 100%;
 }
 
+/* Dropdown trigger */
+.nav-link-dropdown {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  padding: 0.5rem 0;
+  line-height: inherit;
+}
+
+.nav-link-dropdown:hover {
+  color: var(--primary);
+}
+
+/* Keep the underline behaviour consistent */
+.nav-link-dropdown::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0%;
+  height: 2px;
+  background-color: var(--accent);
+  transition: var(--transition);
+}
+
+.nav-dropdown-wrap:hover .nav-link-dropdown::after,
+.nav-dropdown-wrap.open .nav-link-dropdown::after {
+  width: 100%;
+}
+
+.dropdown-chevron {
+  transition: transform 0.25s ease;
+}
+
+.nav-dropdown-wrap.open .dropdown-chevron {
+  transform: rotate(180deg);
+}
+
+/* ── Mega Dropdown ─────────────────────────────────────────────────────────── */
+.nav-dropdown-wrap {
+  position: relative;
+  /* Bridge the gap between trigger and panel so mouseLeave doesn't fire */
+  padding-bottom: 16px;
+  margin-bottom: -16px;
+}
+
+.mega-dropdown {
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 50%;
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.12), 0 4px 16px rgba(181,10,116,0.08);
+  border: 1px solid rgba(0,0,0,0.05);
+  min-width: 780px;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(8px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  z-index: 500;
+}
+
+.nav-dropdown-wrap.open .mega-dropdown {
+  opacity: 1;
+  pointer-events: all;
+  transform: translateX(-50%) translateY(0);
+}
+
+.mega-dropdown-inner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 1.5rem;
+}
+
+.mega-col {
+  padding: 0.75rem 1.25rem;
+  border-right: 1px solid rgba(0,0,0,0.06);
+}
+
+.mega-col:nth-child(3),
+.mega-col:nth-child(6) {
+  border-right: none;
+}
+
+.mega-cat-title {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+  margin-bottom: 0.75rem;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.mega-cat-title:hover {
+  color: var(--primary);
+}
+
+.mega-cat-icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.mega-sub-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.mega-sub-link {
+  display: block;
+  padding: 0.3rem 0;
+  font-size: 0.85rem;
+  color: var(--text-body);
+  text-decoration: none;
+  transition: color 0.2s, padding-left 0.2s;
+}
+
+.mega-sub-link:hover {
+  color: var(--primary);
+  padding-left: 6px;
+}
+
+.mega-footer {
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mega-footer-link {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--primary);
+}
+
+.mega-footer-link:hover {
+  color: var(--accent);
+}
+
+/* ── Mobile catalog accordion ──────────────────────────────────────────────── */
+.mobile-catalog-section {
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+.mobile-catalog-toggle {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: none !important;
+  text-align: left;
+  background: none;
+  border: none;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.mobile-chevron {
+  transition: transform 0.25s ease;
+  flex-shrink: 0;
+}
+
+.mobile-chevron.open {
+  transform: rotate(180deg);
+}
+
+.mobile-catalog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5rem;
+  padding: 0.5rem 0 1.25rem;
+}
+
+.mobile-cat-card {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 0.85rem;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid #f0e0ea;
+  background: var(--bg-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-dark);
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.mobile-cat-card:hover {
+  background: white;
+  box-shadow: var(--shadow-sm);
+}
+
 .nav-actions {
   display: flex;
   align-items: center;

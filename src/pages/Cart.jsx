@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Shield, Truck, Info } from 'lucide-react';
+import { Trash2, Plus, Minus, ShoppingBag, ArrowRight, Shield, Truck, Info, Sparkles } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './Cart.css';
 
@@ -10,10 +10,59 @@ const INSURANCE_COST = 2.99;
 
 const EXTRA_SHIPPING_CATEGORIES = ['poster', 'torte scenografiche', 'canvas', 'tela'];
 
+/* ── Cross-sell mini card ──────────────────────────────────────────────────── */
+const CrossSellCard = ({ product }) => {
+  const { addItem } = useCart();
+  const [added, setAdded] = useState(false);
+  const handleAdd = () => {
+    addItem(product, 1, {});
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
+  };
+  return (
+    <div className="crosssell-card">
+      <Link to={`/product/${product.id}`} className="crosssell-img-wrap">
+        {product.image
+          ? <img src={product.image} alt={product.name} />
+          : <div className="crosssell-img-placeholder"><ShoppingBag size={28} color="var(--primary)" /></div>
+        }
+      </Link>
+      <div className="crosssell-info">
+        <Link to={`/product/${product.id}`} className="crosssell-name">{product.name}</Link>
+        <p className="crosssell-price">€{product.price.toFixed(2)}</p>
+        <button
+          className={`btn crosssell-btn ${added ? 'crosssell-btn-added' : 'btn-outline'}`}
+          onClick={handleAdd}
+        >
+          {added ? '✓ Aggiunto!' : '+ Aggiungi'}
+        </button>
+      </div>
+    </div>
+  );
+};
+
 const Cart = () => {
   const { items, totalCount, totalPrice, updateQty, removeItem, clearCart } = useCart();
   const navigate = useNavigate();
   const [shippingInsurance, setShippingInsurance] = useState(false);
+  const [crossSell, setCrossSell] = useState([]);
+
+  // Fetch cross-sell suggestions: products NOT already in cart, from same categories
+  useEffect(() => {
+    fetch('/api/products')
+      .then(r => r.json())
+      .then(all => {
+        const cartIds = new Set(items.map(i => i.id));
+        const cartCategories = [...new Set(items.map(i => i.category))];
+        // Prefer same-category products; fall back to any
+        const sameCat = all.filter(p => !cartIds.has(p.id) && cartCategories.includes(p.category));
+        const picks = sameCat.length >= 3 ? sameCat : all.filter(p => !cartIds.has(p.id));
+        // Shuffle lightly and take 4
+        setCrossSell(picks.sort(() => 0.3 - Math.random()).slice(0, 4));
+      })
+      .catch(() => {});
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   if (items.length === 0) {
     return (
@@ -166,6 +215,19 @@ const Cart = () => {
           </Link>
         </div>
       </div>
+
+      {/* ── Cross-sell section ────────────────────────────────────────── */}
+      {crossSell.length > 0 && (
+        <div className="crosssell-section">
+          <div className="crosssell-header">
+            <Sparkles size={20} color="var(--accent)" />
+            <h3>Potrebbe piacerti anche</h3>
+          </div>
+          <div className="crosssell-grid">
+            {crossSell.map(p => <CrossSellCard key={p.id} product={p} />)}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

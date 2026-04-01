@@ -1,0 +1,494 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Reviews Page — FESTINI / Smart Print Ciotta
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Hero ──────────────────────────────────────────────────────────────────── */
+.rv-hero {
+  background: radial-gradient(circle at top right, rgba(206,35,141,0.07), transparent 55%),
+              radial-gradient(circle at bottom left, rgba(181,10,116,0.07), transparent 55%);
+  padding: 5rem 0 4rem;
+}
+
+.rv-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 3rem;
+  align-items: center;
+}
+
+.rv-eyebrow {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--accent);
+  margin-bottom: 1rem;
+}
+
+.rv-hero-text h1 {
+  font-size: 3rem;
+  line-height: 1.1;
+  margin-bottom: 1rem;
+}
+
+.rv-hero-text h1 span {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rv-hero-text p {
+  font-size: 1.1rem;
+  color: var(--text-body);
+  max-width: 480px;
+}
+
+/* ── Stats Card ────────────────────────────────────────────────────────────── */
+.rv-stats-card {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 2rem;
+  min-width: 320px;
+  display: flex;
+  gap: 2.5rem;
+  align-items: center;
+}
+
+.rv-avg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.rv-avg-number {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1;
+}
+
+.rv-total-count {
+  font-size: 0.85rem;
+  color: var(--text-body);
+}
+
+.rv-distribution {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rv-dist-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-size: 0.85rem;
+}
+
+.rv-dist-label {
+  width: 28px;
+  color: var(--text-body);
+  white-space: nowrap;
+}
+
+.rv-dist-bar {
+  flex: 1;
+  height: 8px;
+  background: #f0e0ea;
+  border-radius: 9999px;
+  overflow: hidden;
+}
+
+.rv-dist-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  border-radius: 9999px;
+  transition: width 0.8s ease;
+}
+
+.rv-dist-count {
+  width: 20px;
+  text-align: right;
+  color: var(--text-body);
+  font-size: 0.8rem;
+}
+
+/* ── Trust strip ───────────────────────────────────────────────────────────── */
+.rv-trust {
+  background: white;
+  border-top: 1px solid rgba(0,0,0,0.06);
+  border-bottom: 1px solid rgba(0,0,0,0.06);
+  padding: 2rem 0;
+}
+
+.rv-trust-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 2rem;
+}
+
+.rv-trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.4rem;
+}
+
+.rv-trust-item strong {
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.rv-trust-item span {
+  font-size: 0.8rem;
+  color: var(--text-body);
+}
+
+/* ── Controls ──────────────────────────────────────────────────────────────── */
+.rv-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.rv-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.rv-filter-btn {
+  padding: 0.5rem 1.1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  background: transparent;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.rv-filter-btn:hover,
+.rv-filter-btn.active {
+  background: var(--primary);
+  color: white;
+}
+
+/* ── Review Grid ───────────────────────────────────────────────────────────── */
+.rv-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.rv-card {
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: 1.75rem;
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: var(--transition);
+  position: relative;
+}
+
+.rv-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.rv-quote-icon {
+  color: rgba(181, 10, 116, 0.18);
+  margin-bottom: 0.75rem;
+}
+
+.stars-row {
+  display: flex;
+  gap: 0.2rem;
+  margin-bottom: 1rem;
+}
+
+.rv-text {
+  font-size: 0.97rem;
+  color: var(--text-body);
+  line-height: 1.65;
+  font-style: italic;
+  margin-bottom: 1.25rem;
+}
+
+.rv-author {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.rv-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.rv-author-info {
+  flex: 1;
+}
+
+.rv-author-info h4 {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--text-dark);
+}
+
+.rv-verified {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: #2e7d32;
+  margin-top: 0.2rem;
+}
+
+.rv-helpful {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.78rem;
+  color: #888;
+  margin-left: auto;
+}
+
+/* ── Empty state ───────────────────────────────────────────────────────────── */
+.rv-empty {
+  text-align: center;
+  color: var(--text-body);
+  padding: 3rem 0;
+  font-size: 1.05rem;
+}
+
+/* ── Submit section ────────────────────────────────────────────────────────── */
+.rv-submit-section {
+  border-top: 1px solid rgba(0,0,0,0.08);
+  padding-top: 3rem;
+  margin-top: 1rem;
+}
+
+.rv-cta-block {
+  text-align: center;
+  padding: 2.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+}
+
+.rv-cta-block h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.rv-cta-block p {
+  color: var(--text-body);
+  margin-bottom: 1.5rem;
+}
+
+.rv-form-wrap {
+  background: var(--bg-secondary);
+  border-radius: var(--radius-lg);
+  padding: 2rem 2.5rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.rv-form-wrap h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+
+.rv-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.rv-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.rv-form-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--text-dark);
+}
+
+.rv-form-group input,
+.rv-form-group textarea {
+  padding: 0.75rem 1rem;
+  border: 2px solid rgba(0,0,0,0.1);
+  border-radius: var(--radius-sm);
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+  background: white;
+}
+
+.rv-form-group input:focus,
+.rv-form-group textarea:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.rv-star-picker {
+  display: flex;
+  gap: 0.25rem;
+}
+
+.rv-star-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  line-height: 1;
+  transition: transform 0.15s;
+}
+
+.rv-star-btn:hover {
+  transform: scale(1.2);
+}
+
+.rv-form-actions {
+  display: flex;
+  gap: 1rem;
+}
+
+.rv-form-error {
+  color: #c62828;
+  font-size: 0.9rem;
+}
+
+.rv-submit-success {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background: #e8f5e9;
+  border-radius: var(--radius-md);
+  color: #2e7d32;
+  font-weight: 600;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── Final CTA ─────────────────────────────────────────────────────────────── */
+.rv-final-cta {
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  padding: 5rem 0;
+  color: white;
+}
+
+.rv-final-cta h2 {
+  font-size: 2.2rem;
+  color: white;
+  margin-bottom: 0.75rem;
+}
+
+.rv-final-cta p {
+  font-size: 1.15rem;
+  color: rgba(255,255,255,0.85);
+}
+
+.btn-outline-white {
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  border: 2px solid rgba(255,255,255,0.7);
+  color: white;
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+.btn-outline-white:hover {
+  background: rgba(255,255,255,0.15);
+  color: white;
+  border-color: white;
+}
+
+.btn-white {
+  background: white;
+  color: var(--primary);
+  padding: 0.75rem 1.5rem;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: var(--transition);
+}
+
+.btn-white:hover {
+  background: rgba(255,255,255,0.9);
+  color: var(--primary-dark);
+}
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .rv-hero-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .rv-stats-card {
+    min-width: unset;
+    width: 100%;
+  }
+
+  .rv-trust-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 600px) {
+  .rv-hero-text h1 {
+    font-size: 2.2rem;
+  }
+
+  .rv-stats-card {
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .rv-trust-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .rv-controls {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .rv-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rv-form-wrap {
+    padding: 1.5rem;
+  }
+}

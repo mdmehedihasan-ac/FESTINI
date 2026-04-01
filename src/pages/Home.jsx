@@ -6,33 +6,8 @@ import {
   Sparkles, Megaphone, Package, X, Mail, CheckCircle, Shield, Headphones, MousePointer,
   PackageCheck, MessageCircle, Camera, Quote
 } from 'lucide-react';
+import { categoryIconMap, categoryColorMap, ProductPlaceholder } from '../utils/productHelpers';
 import './Home.css';
-
-/* ── Mappings ──────────────────────────────────────────────────────────────── */
-const categoryIconMap = {
-  gifts: Gift, textiles: Package, party: Sparkles,
-  apparel: ShoppingBag, promotional: Megaphone, wedding: Heart,
-};
-
-const categoryColorMap = {
-  gifts:       { bg: 'linear-gradient(135deg,#fdf0f7,#f9dff3)', color: '#B50A74' },
-  textiles:    { bg: 'linear-gradient(135deg,#f4f0fd,#e8def8)', color: '#7c3aed' },
-  party:       { bg: 'linear-gradient(135deg,#fff8e1,#ffecb3)', color: '#f59e0b' },
-  apparel:     { bg: 'linear-gradient(135deg,#e8f5e9,#c8e6c9)', color: '#16a34a' },
-  promotional: { bg: 'linear-gradient(135deg,#e3f2fd,#bbdefb)', color: '#1d4ed8' },
-  wedding:     { bg: 'linear-gradient(135deg,#fce4ec,#f8bbd0)', color: '#e91e63' },
-};
-
-/* ── Product Placeholder ───────────────────────────────────────────────────── */
-const ProductPlaceholder = ({ category }) => {
-  const Icon = categoryIconMap[category] || Gift;
-  const colors = categoryColorMap[category] || categoryColorMap.gifts;
-  return (
-    <div className="product-img-placeholder" style={{ background: colors.bg }}>
-      <Icon size={44} color={colors.color} />
-    </div>
-  );
-};
 
 /* ── Product Card ──────────────────────────────────────────────────────────── */
 const ProductCard = ({ product, badge }) => (
@@ -40,9 +15,10 @@ const ProductCard = ({ product, badge }) => (
     <div className="product-image-container">
       {product.isSpecialOffer && <span className="badge-offer">Promo</span>}
       {badge && <span className="badge-bestseller">{badge}</span>}
-      {product.image
-        ? <img src={product.image} alt={product.name} className="product-img" onError={e => { e.currentTarget.style.display='none'; }} />
-        : <ProductPlaceholder category={product.category} />}
+      <ProductPlaceholder category={product.category} />
+      {product.image && (
+        <img src={product.image} alt={product.name} className="product-img" onError={e => { e.currentTarget.style.display = 'none'; }} />
+      )}
       <div className="product-overlay">
         <Link to={`/product/${product.id}`} className="btn btn-primary">Personalizza</Link>
       </div>
@@ -98,7 +74,7 @@ const NewsletterPopup = ({ show, onClose }) => {
         {status === 'success' ? (
           <div className="popup-success">
             <CheckCircle size={56} color="#2e7d32" />
-            <h2>Grazie! 🎉</h2>
+            <h2>Grazie!</h2>
             <p>Ti abbiamo inviato il codice sconto via email.</p>
             <div className="popup-discount-code">
               <span className="discount-label">Il tuo codice</span>
@@ -114,8 +90,9 @@ const NewsletterPopup = ({ show, onClose }) => {
             <div className="popup-icon-wrap">
               <Gift size={40} color="var(--primary)" />
             </div>
-            <h2>Ottieni il 10% di Sconto! 🎁</h2>
+            <h2>Ottieni il 10% di Sconto!</h2>
             <p>Iscriviti alla nostra newsletter e ricevi subito un codice sconto esclusivo per il tuo primo ordine.</p>
+
             <form onSubmit={handleSubmit} className="popup-form">
               <div className="popup-input-wrap">
                 <Mail size={18} />
@@ -133,6 +110,9 @@ const NewsletterPopup = ({ show, onClose }) => {
             </form>
             {status === 'error' && <p className="popup-error">{msg}</p>}
             <p className="popup-privacy">Niente spam, solo offerte esclusive. Puoi disiscriverti in ogni momento.</p>
+            <button className="popup-no-thanks" onClick={onClose} type="button">
+              No grazie, non voglio lo sconto
+            </button>
           </>
         )}
       </div>
@@ -334,7 +314,7 @@ const Home = () => {
         <div className="container">
           <div className="offers-header">
             <div>
-              <h2 className="section-title mb-2">I Più Venduti 🔥</h2>
+              <h2 className="section-title mb-2">I Più Venduti</h2>
               <p className="section-subtitle">I prodotti che i nostri clienti amano di più</p>
             </div>
             <Link to="/shop" className="btn btn-outline">Vedi Tutti</Link>
@@ -405,7 +385,7 @@ const Home = () => {
       <section className="bundles-section section">
         <div className="container">
           <div className="text-center">
-            <h2 className="section-title mb-2">Pacchetti Risparmio 📦</h2>
+            <h2 className="section-title mb-2">Pacchetti Risparmio</h2>
             <p className="section-subtitle mb-6">Combinazioni pensate per te a prezzo speciale</p>
           </div>
           <div className="bundles-grid">

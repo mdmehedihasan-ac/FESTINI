@@ -96,11 +96,21 @@
 }
 
 .sort-btn {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
+  appearance: none;
+  background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%23B50A74' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E") no-repeat right 0.75rem center;
+  border: 1.5px solid rgba(181, 10, 116, 0.25);
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 2.2rem 0.45rem 0.85rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-dark);
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.sort-btn:focus {
+  outline: none;
+  border-color: var(--primary);
 }
 
 .shop-grid {

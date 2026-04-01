@@ -153,6 +153,87 @@
   background: white;
 }
 
+/* ── Styled File Input ─────────────────────────────────────────────────────── */
+.file-input-hidden {
+  display: none;
+}
+
+.file-input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  border: 2px dashed rgba(181, 10, 116, 0.3);
+  border-radius: var(--radius-sm);
+  background: white;
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+  flex-wrap: wrap;
+}
+
+.file-input-wrap:hover {
+  border-color: var(--primary);
+  background: var(--bg-secondary);
+}
+
+.file-input-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--primary);
+  color: white;
+  padding: 0.45rem 1rem;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 700;
+  white-space: nowrap;
+  flex-shrink: 0;
+  pointer-events: none;
+}
+
+.file-input-hint {
+  font-size: 0.8rem;
+  color: var(--text-body);
+  opacity: 0.55;
+}
+
+.file-input-preview {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-secondary);
+  border-radius: var(--radius-sm);
+  padding: 0.3rem 0.65rem;
+  max-width: 100%;
+  overflow: hidden;
+}
+
+.file-input-name {
+  font-size: 0.82rem;
+  color: var(--text-dark);
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 180px;
+}
+
+.file-input-clear {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #999;
+  display: flex;
+  align-items: center;
+  padding: 0;
+  flex-shrink: 0;
+  transition: color 0.2s;
+}
+
+.file-input-clear:hover {
+  color: #c62828;
+}
+
 .text-input:focus, .select-input:focus {
   outline: none;
   border-color: var(--primary);
@@ -217,13 +298,17 @@
   background: #e0e0e0;
 }
 
-.qty-selector input {
-  width: 40px;
+.qty-value {
+  min-width: 40px;
   text-align: center;
   border: none;
   background: transparent;
   font-weight: 700;
   font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
 }
 
 .add-to-cart-btn {
@@ -346,6 +431,62 @@
   }
   .trust-badges {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .product-detail-page {
+    padding: 1.5rem 0 4rem;
+  }
+
+  .main-image {
+    aspect-ratio: 1 / 1;
+    max-height: 320px;
+    object-fit: contain;
+    background: var(--bg-secondary);
+  }
+
+  .p-title {
+    font-size: 1.6rem;
+  }
+
+  .p-price {
+    font-size: 1.4rem;
+  }
+
+  .p-desc {
+    font-size: 1rem;
+    margin-bottom: 1.75rem;
+  }
+
+  .cart-actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .add-to-cart-btn {
+    width: 100%;
+  }
+
+  .qty-selector {
+    width: fit-content;
+  }
+
+  .trust-badges {
+    grid-template-columns: 1fr;
+  }
+
+  .related-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  .related-info h4 {
+    font-size: 0.85rem;
+  }
+
+  .personalization-section {
+    padding: 1.25rem;
   }
 }
 

@@ -1,35 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Filter, Loader, Gift, ShoppingBag, Sparkles, Package, Megaphone, Heart, LayoutGrid } from 'lucide-react';
+import { categoryIconMap, categoryColorMap, ProductPlaceholder } from '../utils/productHelpers';
 import './Shop.css';
-
-const categoryIconMap = {
-  gifts: Gift,
-  textiles: Package,
-  party: Sparkles,
-  apparel: ShoppingBag,
-  promotional: Megaphone,
-  wedding: Heart,
-};
-
-const categoryColorMap = {
-  gifts:       { bg: 'linear-gradient(135deg,#fdf0f7,#f9dff3)', color: '#B50A74' },
-  textiles:    { bg: 'linear-gradient(135deg,#f4f0fd,#e8def8)', color: '#7c3aed' },
-  party:       { bg: 'linear-gradient(135deg,#fff8e1,#ffecb3)', color: '#f59e0b' },
-  apparel:     { bg: 'linear-gradient(135deg,#e8f5e9,#c8e6c9)', color: '#16a34a' },
-  promotional: { bg: 'linear-gradient(135deg,#e3f2fd,#bbdefb)', color: '#1d4ed8' },
-  wedding:     { bg: 'linear-gradient(135deg,#fce4ec,#f8bbd0)', color: '#e91e63' },
-};
-
-const ProductPlaceholder = ({ category }) => {
-  const Icon = categoryIconMap[category] || Gift;
-  const colors = categoryColorMap[category] || categoryColorMap.gifts;
-  return (
-    <div className="product-img-placeholder" style={{ background: colors.bg }}>
-      <Icon size={44} color={colors.color} />
-    </div>
-  );
-};
 
 const Shop = () => {
   const [activeCategory, setActiveCategory] = useState('all');
@@ -130,7 +103,7 @@ const Shop = () => {
           
           <div className="filter-widget promo-widget mt-4">
             <div className="promo-content">
-              <h4>San Valentino 💝</h4>
+              <h4>San Valentino</h4>
               <p>Scopri le idee regalo per la tua dolce metà.</p>
               <button 
                 className="btn btn-outline" 
@@ -167,9 +140,10 @@ const Shop = () => {
                 <div key={product.id} className="product-card animate-fade-in">
                   <div className="product-image-container">
                     {product.isSpecialOffer && <span className="badge-offer">Promo</span>}
-                    {product.image
-                      ? <img src={product.image} alt={product.name} className="product-img" onError={e => { e.currentTarget.style.display='none'; e.currentTarget.insertAdjacentHTML('afterend',''); }} />
-                      : <ProductPlaceholder category={product.category} />}
+                    <ProductPlaceholder category={product.category} />
+                    {product.image && (
+                      <img src={product.image} alt={product.name} className="product-img" onError={e => { e.currentTarget.style.display = 'none'; }} />
+                    )}
                     <div className="product-overlay">
                       <Link to={`/product/${product.id}`} className="btn btn-primary">Personalizza</Link>
                     </div>

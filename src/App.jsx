@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
 import OrderSuccess from './pages/OrderSuccess';
+import Reviews from './pages/Reviews';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import { CartProvider } from './context/CartContext';
@@ -36,6 +37,7 @@ function App() {
                     <Route path="/cart" element={<Cart />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/order-success" element={<OrderSuccess />} />
+                    <Route path="/reviews" element={<Reviews />} />
                   </Routes>
                 </main>
                 <Footer />

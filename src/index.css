@@ -158,13 +158,16 @@ button {
   transform: scale(1.05);
 }
 
-/* Product real image inside card */
+/* Product real image inside card — sits on top of the placeholder */
 .product-image-container .product-img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s ease;
   display: block;
+  z-index: 1;
 }
 
 .product-card:hover .product-image-container .product-img {

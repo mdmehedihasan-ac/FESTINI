@@ -404,3 +404,113 @@
     padding: 0.8rem;
   }
 }
+
+/* ── Cross-sell section ────────────────────────────────────────────────────── */
+.crosssell-section {
+  border-top: 1px solid rgba(0,0,0,0.06);
+  padding: 2.5rem 0 3rem;
+  margin-top: 0.5rem;
+}
+
+.crosssell-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1.5rem;
+}
+
+.crosssell-header h3 {
+  font-size: 1.3rem;
+  color: var(--text-dark);
+  margin: 0;
+}
+
+.crosssell-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+.crosssell-card {
+  background: white;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.04);
+  transition: var(--transition);
+}
+
+.crosssell-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+.crosssell-img-wrap {
+  display: block;
+  aspect-ratio: 1;
+  overflow: hidden;
+}
+
+.crosssell-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+
+.crosssell-card:hover .crosssell-img-wrap img {
+  transform: scale(1.05);
+}
+
+.crosssell-img-placeholder {
+  width: 100%;
+  height: 100%;
+  background: var(--bg-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.crosssell-info {
+  padding: 1rem;
+}
+
+.crosssell-name {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.35rem;
+  line-height: 1.3;
+  text-decoration: none;
+}
+
+.crosssell-name:hover {
+  color: var(--primary);
+}
+
+.crosssell-price {
+  font-weight: 800;
+  color: var(--primary);
+  font-size: 0.95rem;
+  margin-bottom: 0.75rem;
+}
+
+.crosssell-btn {
+  padding: 0.4rem 0.9rem !important;
+  font-size: 0.82rem !important;
+  border-radius: var(--radius-full) !important;
+  width: 100%;
+}
+
+.crosssell-btn-added {
+  background: #2e7d32 !important;
+  color: white !important;
+  border: none !important;
+  padding: 0.4rem 0.9rem;
+  font-size: 0.82rem;
+  border-radius: var(--radius-full);
+  width: 100%;
+  font-weight: 700;
+  cursor: default;
+}
