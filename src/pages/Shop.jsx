@@ -137,7 +137,7 @@ const Shop = () => {
           ) : (
             <div className="product-grid shop-grid">
               {products.map(product => (
-                <div key={product.id} className="product-card animate-fade-in">
+                <Link key={product.id} to={`/product/${product.id}`} className="product-card animate-fade-in">
                   <div className="product-image-container">
                     {product.isSpecialOffer && <span className="badge-offer">Promo</span>}
                     <ProductPlaceholder category={product.category} />
@@ -145,7 +145,7 @@ const Shop = () => {
                       <img src={product.image} alt={product.name} className="product-img" onError={e => { e.currentTarget.style.display = 'none'; }} />
                     )}
                     <div className="product-overlay">
-                      <Link to={`/product/${product.id}`} className="btn btn-primary">Personalizza</Link>
+                      <span className="btn btn-primary">Personalizza</span>
                     </div>
                   </div>
                   <div className="product-info">
@@ -153,7 +153,7 @@ const Shop = () => {
                     <h3 className="product-name">{product.name}</h3>
                     <p className="product-price">€{product.price.toFixed(2)}</p>
                   </div>
-                </div>
+                </Link>
               ))}
               {products.length === 0 && <p>Nessun prodotto trovato in questa categoria.</p>}
             </div>

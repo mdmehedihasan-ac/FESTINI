@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { ShoppingCart, Heart, ShieldCheck, Truck, RotateCcw, Loader, MessageCircle, ArrowRight, Star, Upload, X } from 'lucide-react';
+import { ShoppingCart, Heart, ShieldCheck, Truck, RotateCcw, Loader, MessageCircle, ArrowRight, Star, Upload, X, Camera, AlignLeft, Image as ImageIcon, Palette, Calendar } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import './ProductDetail.css';
 
@@ -17,6 +17,27 @@ const EXAMPLE_VALUES = {
   'Tema grafico': 'Cuori',
   'Font': 'Corsivo elegante',
 };
+
+const PERSONALIZATION_TYPES = [
+  {
+    id: 'foto',
+    label: 'FOTO',
+    icon: Camera,
+    desc: 'Carica la foto da utilizzare per la personalizzazione (tipo foto bambino ecc.)',
+  },
+  {
+    id: 'foto_frase',
+    label: 'FOTO + FRASE',
+    icon: ImageIcon,
+    desc: 'Carica la foto e scrivi il nome, l\'età e tutto ciò che vuoi come scritta nel prodotto',
+  },
+  {
+    id: 'frase',
+    label: 'FRASE',
+    icon: AlignLeft,
+    desc: 'Il nome, l\'età e tutto ciò che vuoi inserire come scritta nel prodotto',
+  },
+];
 
 /* ── Styled file input ─────────────────────────────────────────────────────── */
 const FileInput = ({ label, onChange }) => {
@@ -73,7 +94,11 @@ const ProductDetail = () => {
   const [error, setError] = useState(false);
 
   const [qty, setQty] = useState(1);
-  const [personalization, setPersonalization] = useState({});
+  const [personType, setPersonType] = useState('');
+  const [personFoto, setPersonFoto] = useState('');
+  const [personFrase, setPersonFrase] = useState('');
+  const [personTema, setPersonTema] = useState('');
+  const [personData, setPersonData] = useState('');
   const [added, setAdded] = useState(false);
   const [activeThumb, setActiveThumb] = useState(0);
   const { addItem } = useCart();
@@ -122,11 +147,14 @@ const ProductDetail = () => {
     );
   }
 
-  const handlePersonalizeChange = (option, value) => {
-    setPersonalization(prev => ({ ...prev, [option]: value }));
-  };
-
   const handleAddToCart = () => {
+    const personalization = {
+      ...(personType && { tipo: PERSONALIZATION_TYPES.find(t => t.id === personType)?.label }),
+      ...(personFoto && { foto: personFoto }),
+      ...(personFrase && { frase: personFrase }),
+      ...(personTema && { tema: personTema }),
+      ...(personData && { dataConsegna: personData }),
+    };
     addItem(product, qty, personalization);
     setAdded(true);
     setTimeout(() => setAdded(false), 2000);
@@ -144,76 +172,145 @@ const ProductDetail = () => {
         </div>
 
         <div className="product-detail-container">
-          {/* Image Gallery */}
+
+          {/* ── LEFT: Sticky Image ── */}
           <div className="product-gallery">
             <div className="main-image-wrapper">
               {product.isSpecialOffer && <span className="badge-offer-large">Novità</span>}
               <img src={product.image} alt={product.name} className="main-image" />
             </div>
+            {/* Trust badges under image */}
+            <div className="trust-badges-col">
+              <div className="trust-badge-row">
+                <Truck size={18} color="var(--primary)" />
+                <span><strong>Spedizione Rapida</strong> — Standard o Express in Italia</span>
+              </div>
+              <div className="trust-badge-row">
+                <ShieldCheck size={18} color="var(--primary)" />
+                <span><strong>Pagamenti Sicuri</strong> — Carte, PayPal, PostePay</span>
+              </div>
+              <div className="trust-badge-row">
+                <RotateCcw size={18} color="var(--primary)" />
+                <span><strong>Qualità Garantita</strong> — Materiali Premium certificati</span>
+              </div>
+            </div>
           </div>
 
-          {/* Product Info & Actions */}
-          <div className="product-actions">
-            <span className="p-category">{product.category}</span>
-            <h1 className="p-title">{product.name}</h1>
-            <p className="p-price">€{product.price.toFixed(2)}</p>
+          {/* ── RIGHT: Info + Form + CTA ── */}
+          <div className="product-info-col">
 
-            <p className="p-desc">{product.description}</p>
+            {/* Header */}
+            <div className="p-header">
+              <span className="p-category">{product.category}</span>
+              <h1 className="p-title">{product.name}</h1>
+              <div className="p-price-row">
+                <span className="p-price">€{product.price.toFixed(2)}</span>
+                {product.isSpecialOffer && <span className="p-badge-promo">In Promozione</span>}
+              </div>
+              <p className="p-desc">{product.description}</p>
+            </div>
 
-            {/* Personalization Options */}
-            {product.personalizeOptions && product.personalizeOptions.length > 0 && (
-              <div className="personalization-section">
-                <h3>Personalizza il tuo prodotto</h3>
-                <p className="personalization-hint">Compila i campi sottostanti. Puoi anche lasciarli vuoti e specificarli dopo.</p>
-                {product.personalizeOptions.map((opt, i) => (
-                  <div key={i} className="form-group">
-                    <label>{opt}</label>
-                    {opt.toLowerCase().includes('foto') || opt.toLowerCase().includes('grafica') ? (
-                      <FileInput
-                        label={opt}
-                        onChange={(name) => handlePersonalizeChange(opt, name)}
-                      />
-                    ) : opt.toLowerCase().includes('colore') ? (
-                      <select className="select-input" onChange={(e) => handlePersonalizeChange(opt, e.target.value)}>
-                        <option value="">Seleziona...</option>
-                        <option value="Rosso">Rosso</option>
-                        <option value="Blu">Blu</option>
-                        <option value="Verde">Verde</option>
-                        <option value="Nero">Nero</option>
-                        <option value="Rosa">Rosa</option>
-                        <option value="Bianco">Bianco</option>
-                      </select>
-                    ) : (
-                      <input
-                        type="text"
-                        className="text-input"
-                        placeholder={EXAMPLE_VALUES[opt] ? `es. ${EXAMPLE_VALUES[opt]}` : `Inserisci ${opt}`}
-                        onChange={(e) => handlePersonalizeChange(opt, e.target.value)}
-                      />
-                    )}
-                  </div>
-                ))}
+            <div className="p-divider" />
 
-                {/* WhatsApp bozze note */}
-                <div className="whatsapp-note">
-                  <MessageCircle size={18} />
-                  <p>
-                    <strong>Bozze via WhatsApp:</strong> Dopo l'ordine e il pagamento, riceverai le bozze grafiche
-                    direttamente su WhatsApp per la tua approvazione prima della stampa.
-                  </p>
+            {/* Personalization Section */}
+            <div className="personalization-section">
+
+              {/* Step 1 */}
+              <div className="person-step-header">
+                <span className="person-step-num">1</span>
+                <div>
+                  <h3 className="person-step-title">Tipo di Personalizzazione</h3>
+                  <p className="personalization-hint">Scegli cosa vuoi aggiungere al prodotto.</p>
                 </div>
               </div>
-            )}
+              <div className="person-type-grid">
+                {PERSONALIZATION_TYPES.map(type => {
+                  const Icon = type.icon;
+                  return (
+                    <button
+                      key={type.id}
+                      type="button"
+                      className={`person-type-card ${personType === type.id ? 'active' : ''}`}
+                      onClick={() => setPersonType(type.id)}
+                    >
+                      <div className="person-type-icon-wrap"><Icon size={22} /></div>
+                      <span className="person-type-label">{type.label}</span>
+                      <span className="person-type-desc">{type.desc}</span>
+                    </button>
+                  );
+                })}
+              </div>
 
-            {/* Add to Cart */}
-            <div className="cart-actions mt-6">
+              {/* Step 2: dynamic fields */}
+              {personType && (
+                <div className="person-form animate-fade-in">
+                  <div className="person-step-header">
+                    <span className="person-step-num">2</span>
+                    <div>
+                      <h3 className="person-step-title">Inserisci i Dati</h3>
+                    </div>
+                  </div>
+                  {(personType === 'foto' || personType === 'foto_frase') && (
+                    <div className="form-group">
+                      <label>Carica la tua Foto</label>
+                      <FileInput label="Foto" onChange={setPersonFoto} />
+                    </div>
+                  )}
+                  {(personType === 'foto_frase' || personType === 'frase') && (
+                    <div className="form-group">
+                      <label>Nome / Età / Frase personalizzata</label>
+                      <textarea
+                        className="text-input"
+                        rows={3}
+                        placeholder="es. Sofia, 5 anni — La mia principessa del cuore"
+                        value={personFrase}
+                        onChange={e => setPersonFrase(e.target.value)}
+                      />
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* Step 3: tema + data */}
+              <div className="person-step-header" style={{ marginTop: '1.5rem' }}>
+                <span className="person-step-num">3</span>
+                <div>
+                  <h3 className="person-step-title">Tema & Consegna</h3>
+                </div>
+              </div>
+
+              <div className="person-extra-row">
+                <div className="form-group">
+                  <label><Palette size={14} className="label-icon" />Tema della Grafica <span className="label-optional">opzionale</span></label>
+                  <p className="field-hint">Tutti i prodotti sono personalizzabili! Se vuoi un tema diverso da quello in foto scrivilo qui.<br/><em>es. Spiderman, Frozen, Unicorni...</em></p>
+                  <input type="text" className="text-input" placeholder="es. Spiderman, Frozen, Dinosauri..."
+                    value={personTema} onChange={e => setPersonTema(e.target.value)} />
+                </div>
+                <div className="form-group">
+                  <label><Calendar size={14} className="label-icon" />Data Evento / Consegna</label>
+                  <p className="field-hint">Inserisci la data dell'evento così da poterci regolare con le consegne.</p>
+                  <input type="date" className="text-input" value={personData}
+                    onChange={e => setPersonData(e.target.value)}
+                    min={new Date().toISOString().split('T')[0]} />
+                </div>
+              </div>
+
+              {/* WhatsApp note */}
+              <div className="whatsapp-note">
+                <MessageCircle size={18} />
+                <p><strong>Anteprima via WhatsApp:</strong> La bozza grafica verrà realizzata ed inviata tramite WhatsApp solo dopo ricevuto l'ordine e il pagamento.</p>
+              </div>
+            </div>
+
+            {/* ── CTA Cart ── */}
+            <div className="cart-cta-block">
               <div className="qty-selector">
                 <button onClick={() => setQty(Math.max(1, qty - 1))}>-</button>
                 <span className="qty-value">{qty}</span>
                 <button onClick={() => setQty(qty + 1)}>+</button>
               </div>
               <button
-                className={`btn ${added ? 'btn-success' : 'btn-primary'} add-to-cart-btn`}
+                className={`btn ${added ? '' : 'btn-primary'} add-to-cart-btn`}
                 style={{ background: added ? '#2e7d32' : '' }}
                 onClick={handleAddToCart}
               >
@@ -221,30 +318,6 @@ const ProductDetail = () => {
               </button>
             </div>
 
-            {/* Trust Badges */}
-            <div className="trust-badges mt-6">
-              <div className="badge-item">
-                <Truck size={24} color="var(--primary)" />
-                <div className="badge-text">
-                  <strong>Spedizione Rapida</strong>
-                  <span>Standard o Express in Italia</span>
-                </div>
-              </div>
-              <div className="badge-item">
-                <ShieldCheck size={24} color="var(--primary)" />
-                <div className="badge-text">
-                  <strong>Pagamenti Sicuri</strong>
-                  <span>Carte, PayPal, PostePay</span>
-                </div>
-              </div>
-              <div className="badge-item">
-                <RotateCcw size={24} color="var(--primary)" />
-                <div className="badge-text">
-                  <strong>Qualità Garantita</strong>
-                  <span>Materiali Premium certificati</span>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
 

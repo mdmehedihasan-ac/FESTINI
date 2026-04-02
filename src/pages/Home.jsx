@@ -11,7 +11,7 @@ import './Home.css';
 
 /* ── Product Card ──────────────────────────────────────────────────────────── */
 const ProductCard = ({ product, badge }) => (
-  <div className="product-card">
+  <Link to={`/product/${product.id}`} className="product-card">
     <div className="product-image-container">
       {product.isSpecialOffer && <span className="badge-offer">Promo</span>}
       {badge && <span className="badge-bestseller">{badge}</span>}
@@ -20,7 +20,7 @@ const ProductCard = ({ product, badge }) => (
         <img src={product.image} alt={product.name} className="product-img" onError={e => { e.currentTarget.style.display = 'none'; }} />
       )}
       <div className="product-overlay">
-        <Link to={`/product/${product.id}`} className="btn btn-primary">Personalizza</Link>
+        <span className="btn btn-primary">Personalizza</span>
       </div>
     </div>
     <div className="product-info">
@@ -28,7 +28,7 @@ const ProductCard = ({ product, badge }) => (
       <h3 className="product-name">{product.name}</h3>
       <p className="product-price">€{product.price.toFixed(2)}</p>
     </div>
-  </div>
+  </Link>
 );
 
 /* ── Newsletter Popup ──────────────────────────────────────────────────────── */

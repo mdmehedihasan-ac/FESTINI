@@ -265,6 +265,9 @@
 }
 
 .product-card {
+  display: block;
+  text-decoration: none;
+  color: inherit;
   background: white;
   border-radius: var(--radius-md);
   overflow: hidden;
@@ -334,11 +337,15 @@
   align-items: center;
   justify-content: center;
   opacity: 0;
+  pointer-events: none;
   transition: var(--transition);
 }
 
-.product-card:hover .product-overlay {
-  opacity: 1;
+@media (hover: hover) {
+  .product-card:hover .product-overlay {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 .product-info {
